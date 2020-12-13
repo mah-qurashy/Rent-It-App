@@ -29,7 +29,6 @@ export class PlaceDetailsPage implements OnInit {
 				this.navController.navigateBack('/places/tabs/offers')
 				return
 			}
-			console.log(paramMap.get('placeId'))
 			this.place = this.placesService.getPlace(paramMap.get('placeId'))
 			if (!this.place) {
 				this.navController.navigateBack('/places/tabs/offers')
