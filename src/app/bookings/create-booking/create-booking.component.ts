@@ -42,7 +42,8 @@ export class CreateBookingComponent implements OnInit {
   caclulateCost(ds1:string,ds2:string){
     let d1=new Date(ds1)
     let d2=new Date(ds2)
-    let diff = Math.ceil(Math.abs(d2.getTime()-d1.getTime()) / (1000 * 60 * 60 * 24)); 
+    let diff = Math.floor(Math.abs(d2.getTime()-d1.getTime()) / (1000 * 60 * 60 * 24)); 
+    if(diff<=0){diff=1}
     this.currentCostText="Total Cost = "+diff*this.place.price
 
   }
