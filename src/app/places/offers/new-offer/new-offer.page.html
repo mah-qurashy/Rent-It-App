@@ -14,31 +14,66 @@
 				<ion-list>
 					<ion-item>
 						<ion-label position="floating">Title</ion-label>
-						<ion-input ngModel name="title"type="text" autocomplete autocorrect></ion-input>
+						<ion-input
+							ngModel
+							name="title"
+							type="text"
+							autocomplete
+							autocorrect
+							required
+						></ion-input>
 					</ion-item>
 					<ion-item>
 						<ion-label position="floating">Description</ion-label>
-						<ion-textarea ngModel name="description"rows="3" autocomplete autocorrect></ion-textarea>
-          </ion-item>
-          <ion-item>
-            <ion-label>Available from</ion-label>
-            <ion-datetime ngModel name="startdate" (ionChange)="onStartDateChange($event)" [min]="todayDate"
-              [max]="(endDate)? endDate : '2030-01-01'" placeholder="Select Start Date" ngModel name="startdate"
-              required></ion-datetime>
-          </ion-item>
-          <ion-item>
-            <ion-label>Available to</ion-label>
-            <ion-datetime ngModel name="enddate"(ionChange)="onEndDateChange($event)" [min]="startDate" max="2030-01-01"
-              placeholder="Select End Date" ngModel name="enddate" required></ion-datetime>
-          </ion-item>
-          <ion-item>
-						<ion-label position="floating">Price / Night</ion-label>
-						<ion-input ngModel name="price"type="number" min="1"></ion-input>
+						<ion-textarea
+							ngModel
+							name="description"
+							rows="3"
+							autocomplete
+							autocorrect
+						></ion-textarea>
 					</ion-item>
-        </ion-list>
-        <ion-button type="submit" expand="block" (click)="onSubmitPlace()">Submit Offer</ion-button>
+					<ion-item>
+						<ion-label>Available from</ion-label>
+						<ion-datetime
+							ngModel
+							name="startdate"
+							(ionChange)="onStartDateChange($event)"
+							[min]="todayDate"
+							[max]="(endDate)? endDate : '2030-01-01'"
+							placeholder="Select Start Date"
+							ngModel
+							name="startdate"
+						></ion-datetime>
+					</ion-item>
+					<ion-item>
+						<ion-label>Available to</ion-label>
+						<ion-datetime
+							ngModel
+							name="enddate"
+							(ionChange)="onEndDateChange($event)"
+							[min]="startDate"
+							max="2030-01-01"
+							placeholder="Select End Date"
+							ngModel
+							name="enddate"
+						></ion-datetime>
+					</ion-item>
+					<ion-item>
+						<ion-label position="floating">Price / Night</ion-label>
+						<ion-input
+							ngModel
+							name="price"
+							type="number"
+							min="1"
+							required
+						></ion-input>
+					</ion-item>
+				</ion-list>
+				<ion-button type="submit" expand="block" (click)="onSubmitPlace()"
+					>Submit Offer</ion-button
+				>
 			</ion-col>
-    </ion-row>
-
+		</ion-row>
 	</form>
 </ion-content>
