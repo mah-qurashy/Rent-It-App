@@ -24,6 +24,15 @@
               <ion-datetime (ionChange)="onEndDateChange($event)" [min]="startDate" max="2030-01-01"
                 placeholder="Select End Date" ngModel name="enddate" required></ion-datetime>
             </ion-item>
+            <ion-item>
+              <ion-label>Number of guests</ion-label>
+              <ion-select ngModel name="numberofguests" [ngModel]="'2'" required >
+                <ion-select-option value="1">1</ion-select-option>
+                <ion-select-option value="2">2</ion-select-option>
+                <ion-select-option value="3">3</ion-select-option>
+                <ion-select-option value="4">4</ion-select-option>
+              </ion-select>
+            </ion-item>
             <ion-item class="ion-text-center">
               <ion-label color="medium">{{currentCostText}}</ion-label>
             </ion-item>
