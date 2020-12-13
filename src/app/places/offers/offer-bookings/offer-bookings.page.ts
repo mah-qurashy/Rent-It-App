@@ -12,10 +12,10 @@ import { PlacesService } from '../../places.service';
 export class OfferBookingsPage implements OnInit {
   private place: Place
 
-  constructor(private route:ActivatedRoute,private navController:NavController,private placesService: PlacesService) { }
+  constructor(private activatedRoute:ActivatedRoute,private navController:NavController,private placesService: PlacesService) { }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(paramMap =>{
+    this.activatedRoute.paramMap.subscribe(paramMap =>{
       if(!paramMap.has('placeId')){
         this.navController.navigateBack('/places/tabs/offers')
         return
