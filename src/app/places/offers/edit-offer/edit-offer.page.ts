@@ -12,8 +12,6 @@ import { PlacesService } from '../../places.service'
 })
 export class EditOfferPage implements OnInit {
 	private offer: Place
-	private startDate: string
-	private endDate: string
 	private todayDate=new Date(Date.now()).toISOString()
 
 	constructor(
@@ -34,13 +32,6 @@ export class EditOfferPage implements OnInit {
 				return
 			}
 		})
-	}
-	onStartDateChange(event: CustomEvent){
-	  this.startDate=event.detail.value;
-	}
-	onEndDateChange(event: CustomEvent){
-	  this.endDate=event.detail.value;
-  
 	}
 	onSubmit(form:NgForm){
 	  if (!form.valid){

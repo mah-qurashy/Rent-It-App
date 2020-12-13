@@ -7,19 +7,10 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./new-offer.page.scss'],
 })
 export class NewOfferPage implements OnInit {
-  private startDate: string
-  private endDate: string
   private todayDate=new Date(Date.now()).toISOString()
   constructor() { }
 
   ngOnInit() {
-  }
-  onStartDateChange(event: CustomEvent){
-    this.startDate=event.detail.value;
-  }
-  onEndDateChange(event: CustomEvent){
-    this.endDate=event.detail.value;
-
   }
   onSubmit(form: NgForm){
     if (!form.valid){
