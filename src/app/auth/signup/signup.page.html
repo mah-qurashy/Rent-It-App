@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Signup to Rent it</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+			<ion-col size-lg="4" offset-lg="4" class="logo-container">
+					<div class="logo-image-container">
+						<img src="./assets/logo.png" class="logo-image" />
+					</div>
+					<div class="logo-text-container">
+						<h1 class="logo-text">Rent it</h1>
+					</div>
+			</ion-col>
+		</ion-row>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+		<ion-row>
+			<ion-col size-lg="4" offset-lg="4">
+				<ion-list>
+          <ion-item>
+						<ion-label position="floating">First Name</ion-label>
+						<ion-input type="email" ngModel name="firstname" required></ion-input>
+          </ion-item>
+          <ion-item>
+						<ion-label position="floating">Last Name</ion-label>
+						<ion-input type="email" ngModel name="lastname" required></ion-input>
+					</ion-item>
+					<ion-item>
+						<ion-label position="floating">E-Mail</ion-label>
+						<ion-input type="email" ngModel name="email" required email></ion-input>
+					</ion-item>
+					<ion-item>
+						<ion-label position="floating">Password</ion-label>
+						<ion-input type="password" ngModel name="password" required minlength="8"></ion-input>
+          </ion-item>
+          <ion-item>
+						<ion-label position="floating">Confirm Password</ion-label>
+						<ion-input type="password" ngModel name="passwordconfirm" required minlength="8"></ion-input>
+					</ion-item>
+				</ion-list>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col size-lg="4" offset-lg="4" class="ion-text-center">		
+			<ion-spinner *ngIf="isLoading"></ion-spinner>
+				<ion-button type="submit" *ngIf="!isLoading" color="primary" expand="block" (click)="onSignup()">Signup</ion-button>
+				<ion-button type="button" color= "primary" fill="clear" expand="full" routerLink="/auth">Already have an accout? Sign in</ion-button>
+			</ion-col>
+    </ion-row>
+  </form>
+	</ion-grid>
+</ion-content>

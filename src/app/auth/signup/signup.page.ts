@@ -3,14 +3,14 @@ import { NgForm } from '@angular/forms'
 import { Router } from '@angular/router'
 import { MenuController, Platform } from '@ionic/angular'
 import { Subscription } from 'rxjs'
-import { AuthService } from './auth.service'
+import { AuthService } from '../auth.service'
 
 @Component({
-	selector: 'app-auth',
-	templateUrl: './auth.page.html',
-	styleUrls: ['./auth.page.scss'],
+	selector: 'app-signup',
+	templateUrl: './signup.page.html',
+	styleUrls: ['./signup.page.scss'],
 })
-export class AuthPage implements OnInit {
+export class SignupPage implements OnInit {
 	isLoading = false
 	private exitSubcription: Subscription
 
@@ -34,7 +34,7 @@ export class AuthPage implements OnInit {
 		this.exitSubcription.unsubscribe()
 	}
 
-	onLogin() {
+	onSignup() {
 		this.authService.login()
 		this.isLoading = true
 		setTimeout(() => {
@@ -44,12 +44,5 @@ export class AuthPage implements OnInit {
 			this.menuController.enable(true)
 		}, 2000)
 	}
-	onSubmit(form: NgForm) {
-		if(!form.valid){
-			return
-		}
-		const email =form.value.email;
-		const password = form.value.password;
-		//send login request
-	}
+	onSubmit(form: NgForm) {}
 }
