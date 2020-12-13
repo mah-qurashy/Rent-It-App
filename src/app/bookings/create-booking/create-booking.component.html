@@ -7,6 +7,26 @@
   </ion-toolbar>
   </ion-header>
   <ion-content>
-    <ion-label> {{place.description}} </ion-label>
-    <ion-button expand="block" (click)="onBookPlace()">Book</ion-button>
+    <ion-grid>
+      <ion-row class= "ion-text-center">
+        <ion-col size-md="8" offset-md="2">
+          <h2>Book this place</h2>
+          <ion-list>
+          <ion-item>
+            <ion-label>Start Date</ion-label>
+            <ion-datetime (ionChange)="onStartDateChange($event)" [min]="todayDate"[max]="(endDate)? endDate : '2030-01-01'" placeholder="Select Start Date"></ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label>End Date</ion-label>
+            <ion-datetime (ionChange)="onEndDateChange($event)"  [min]="startDate" max="2030-01-01" placeholder="Select End Date"></ion-datetime>
+          </ion-item>
+          <ion-item class="ion-text-center">
+            <ion-label color="medium">{{currentCostText}}</ion-label>
+          </ion-item>
+        </ion-list>
+          <ion-button expand="block" (click)="onBookPlace()">Book</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
   </ion-content>
