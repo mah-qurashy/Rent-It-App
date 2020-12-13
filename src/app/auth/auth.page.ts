@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -9,12 +10,13 @@ import { AuthService } from './auth.service';
 })
 export class AuthPage implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private menuController: MenuController) { }
 
   ngOnInit() {
   }
   onLogin(){
     this.authService.login()
     this.router.navigateByUrl('/places/tabs/discover')
+    this.menuController.enable(true)
   }
 }
