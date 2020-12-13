@@ -5,28 +5,33 @@
       <ion-button (click)="onCancel()">Close</ion-button>
     </ion-buttons>
   </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <ion-grid>
-      <ion-row class= "ion-text-center">
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+      <ion-row class="ion-text-center">
         <ion-col size-md="8" offset-md="2">
           <h2>Book this place</h2>
           <ion-list>
-          <ion-item>
-            <ion-label>Start Date</ion-label>
-            <ion-datetime (ionChange)="onStartDateChange($event)" [min]="todayDate"[max]="(endDate)? endDate : '2030-01-01'" placeholder="Select Start Date"></ion-datetime>
-          </ion-item>
-          <ion-item>
-            <ion-label>End Date</ion-label>
-            <ion-datetime (ionChange)="onEndDateChange($event)"  [min]="startDate" max="2030-01-01" placeholder="Select End Date"></ion-datetime>
-          </ion-item>
-          <ion-item class="ion-text-center">
-            <ion-label color="medium">{{currentCostText}}</ion-label>
-          </ion-item>
-        </ion-list>
-          <ion-button expand="block" (click)="onBookPlace()">Book</ion-button>
+            <ion-item>
+              <ion-label>Start Date</ion-label>
+              <ion-datetime (ionChange)="onStartDateChange($event)" [min]="todayDate"
+                [max]="(endDate)? endDate : '2030-01-01'" placeholder="Select Start Date" ngModel name="startdate"
+                required></ion-datetime>
+            </ion-item>
+            <ion-item>
+              <ion-label>End Date</ion-label>
+              <ion-datetime (ionChange)="onEndDateChange($event)" [min]="startDate" max="2030-01-01"
+                placeholder="Select End Date" ngModel name="enddate" required></ion-datetime>
+            </ion-item>
+            <ion-item class="ion-text-center">
+              <ion-label color="medium">{{currentCostText}}</ion-label>
+            </ion-item>
+          </ion-list>
+          <ion-button type="submit" expand="block" (click)="onBookPlace()">Book</ion-button>
         </ion-col>
       </ion-row>
-    </ion-grid>
+    </form>
+  </ion-grid>
 
-  </ion-content>
+</ion-content>

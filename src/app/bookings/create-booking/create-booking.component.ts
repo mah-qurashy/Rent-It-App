@@ -1,5 +1,6 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Place } from 'src/app/places/place.model';
 
@@ -46,6 +47,10 @@ export class CreateBookingComponent implements OnInit {
     if(diff<=0){diff=1}
     this.currentCostText="Total Cost = "+diff*this.place.price
 
+  }
+  onSubmit(form: NgForm){
+    const startDate=form.value.startdate
+    const endDate=form.value.enddate
   }
 
 }
