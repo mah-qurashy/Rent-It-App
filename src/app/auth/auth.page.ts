@@ -1,28 +1,44 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
-import { AuthService } from './auth.service';
+import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
+import { MenuController, Platform } from '@ionic/angular'
+import { Subscription } from 'rxjs'
+import { AuthService } from './auth.service'
 
 @Component({
-  selector: 'app-auth',
-  templateUrl: './auth.page.html',
-  styleUrls: ['./auth.page.scss'],
+	selector: 'app-auth',
+	templateUrl: './auth.page.html',
+	styleUrls: ['./auth.page.scss'],
 })
 export class AuthPage implements OnInit {
-  isLoading=false;
+	isLoading = false
+	private exitSubcription: Subscription
 
-  constructor(private authService: AuthService, private router: Router, private menuController: MenuController) { }
+	constructor(
+		private authService: AuthService,
+		private router: Router,
+		private menuController: MenuController,
+		private platform: Platform
+	) {}
 
-  ngOnInit() {
-  }
-  onLogin(){
-    this.authService.login()
-    this.isLoading=true
-    setTimeout(()=>{
-      this.isLoading=false
-      this.router.navigateByUrl('/places/tabs/discover')
-      this.menuController.enable(true)
-    },2000)
+	ngOnInit() {}
+	//hardware back button exits app on phones
+	ionViewDidEnter() {
+		this.exitSubcription = this.platform.backButton.subscribe(() => {
+			navigator['app'].exitApp()
+		})
+	}
+	ionViewWillLeave() {
+		this.exitSubcription.unsubscribe()
+	}
 
-  }
+	onLogin() {
+		this.authService.login()
+		this.isLoading = true
+		setTimeout(() => {
+			//simulate login
+			this.isLoading = false
+			this.router.navigateByUrl('/places/tabs/discover')
+			this.menuController.enable(true)
+		}, 2000)
+	}
 }
