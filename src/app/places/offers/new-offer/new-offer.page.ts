@@ -22,6 +22,9 @@ export class NewOfferPage implements OnInit {
 
   }
   onSubmit(form: NgForm){
+    if (!form.valid){
+      return
+    }
     const title=form.value.title
     const description=form.value.description
     const startDate=form.value.startdate
