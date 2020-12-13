@@ -1,9 +1,41 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Login to Rent it</ion-title>
-  </ion-toolbar>
+	<ion-toolbar>
+		<ion-title>Login to Rent it</ion-title>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-<ion-button color="primary" (click)="onLogin()">Login</ion-button>
+	<ion-grid>
+		<ion-row>
+			<ion-col size-md="4" offset-md="4" class="logo-container">
+					<div class="logo-image-container">
+						<img src="./assets/logo.png" class="logo-image" />
+					</div>
+					<div class="logo-text-container">
+						<h1 class="logo-text">Rent it</h1>
+					</div>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col size-md="4" offset-md="4">
+				<ion-list>
+					<ion-item>
+						<ion-label position="floating">E-Mail</ion-label>
+						<ion-input></ion-input>
+					</ion-item>
+					<ion-item>
+						<ion-label position="floating">Password</ion-label>
+						<ion-input type="password"></ion-input>
+					</ion-item>
+				</ion-list>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col size-md="4" offset-md="4">
+				<ion-button color="primary" expand="block" (click)="onLogin()"
+					>Login</ion-button
+				>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 </ion-content>

@@ -1,0 +1,25 @@
+@font-face{
+    font-family: Philosopher;
+    src:  url("/assets/Philosopher.otf")
+}
+.logo-container{
+    text-align: center;
+    padding: 50px
+}
+
+.logo-text-container,.logo-image-container{
+    display:inline-block; 
+    vertical-align: middle;
+    padding: 10px
+   
+}
+
+.logo-text{
+   font-size: 3.5rem;
+   font-family:"Philosopher"
+}
+
+
+.logo-image{
+    height: 20vh;
+}
