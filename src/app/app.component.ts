@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -11,7 +11,8 @@ import { Router } from '@angular/router';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
+  private isAuthenticated : boolean  = false
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -21,7 +22,9 @@ export class AppComponent {
   ) {
     this.initializeApp();
   }
-
+  ngOnInit(){
+    this.isAuthenticated=this.authService.userIsAuthenticated
+  }
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();

@@ -9,12 +9,14 @@ import { Place } from '../place.model'
 })
 export class DiscoverPage implements OnInit {
   private _places: Place[]=[]
+  private isAuthenticated: boolean
 
   constructor(private  placesService: PlacesService) { 
   }
 
   ngOnInit() {
     this._places=this.placesService.getPlaces()
+
   }
 
 }
