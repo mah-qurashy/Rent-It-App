@@ -7,6 +7,7 @@ An app for place rentals, made with Ionic + Angular
 ## Technologies used:
 * Ionic 5 + Capacitor
 * Angular 11
+* Angular PWA
 * Rxjs
 * Firebase deployment
 * Firebase Authentication (WIP)
