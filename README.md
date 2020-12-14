@@ -8,3 +8,9 @@ An app for place rentals, made with Ionic + Angular
 * Ionic 5 + Capacitor
 * Angular 11
 * Rxjs
+* Firebase deployment
+* Firebase Authentication (WIP)
+* Firestore for database (WIP)
+
+Link to website:
+https://rent-it-35be1.firebaseapp.com/
