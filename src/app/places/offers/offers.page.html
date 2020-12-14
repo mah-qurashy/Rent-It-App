@@ -21,8 +21,15 @@
 						</ion-thumbnail>
 						<ion-label>
 							<h2>{{offer.title}}</h2>
-							<ion-icon name="calendar" color="medium"></ion-icon>
-							<ion-text color="medium"> date from to</ion-text>
+							
+							<ion-text color="medium" *ngIf="offer.startDate || offer.endDate"
+						><ion-icon name="calendar" color="medium"></ion-icon>
+						<span *ngIf="offer.startDate"
+							> from {{ offer.startDate.toLocaleDateString() }} </span
+						><span *ngIf="offer.endDate"
+							>to {{ offer.endDate.toLocaleDateString() }}</span
+						></ion-text
+					>
 						</ion-label>
 					</ion-item>
 				</ion-list>

@@ -22,42 +22,48 @@ export class CreateBookingComponent implements OnInit {
 
 	ngOnInit() {
 		if (this.place.startDate) {
-			if (this.place.startDate < this.startDateMin)
+			if (this.place.startDate < this.startDateMin) {
 				this.startDateMin = this.place.startDate
-			this.endDateMin = this.place.startDate
+				this.endDateMin = this.place.startDate
+			}
 		}
 		if (this.place.endDate) {
 			this.startDateMax = this.place.endDate
 			this.endDateMax = this.place.endDate
 		}
-  }
-  
+	}
 
 	onStartDateChange(event: CustomEvent) {
-    this.startDate = event.detail.value
-    const selectedDate = new Date(this.startDate)
-    if(this.place.startDate){
-		if (selectedDate>this.place.startDate) {
-			this.endDateMin=selectedDate
-    }}else{
-      this.endDateMin=selectedDate
-    }
+		if (event.detail.value) {
+			this.startDate = event.detail.value
+			const selectedDate = new Date(this.startDate)
+			if (this.place.startDate) {
+				if (selectedDate > this.place.startDate) {
+					this.endDateMin = selectedDate
+				}
+			} else {
+				this.endDateMin = selectedDate
+			}
 
-		if (this.endDate) {
-			this.caclulateCost(this.startDate, this.endDate)
+			if (this.endDate) {
+				this.caclulateCost(this.startDate, this.endDate)
+			}
 		}
 	}
 	onEndDateChange(event: CustomEvent) {
-    this.endDate = event.detail.value
-    const selectedDate = new Date(this.endDate)
-    if(this.place.endDate){
-		if (selectedDate<this.place.endDate) {
-			this.startDateMax=selectedDate
-		}}else{
-      this.startDateMax=selectedDate
-    }
-		if (this.startDate) {
-			this.caclulateCost(this.startDate, this.endDate)
+		if (event.detail.value) {
+			this.endDate = event.detail.value
+			const selectedDate = new Date(this.endDate)
+			if (this.place.endDate) {
+				if (selectedDate < this.place.endDate) {
+					this.startDateMax = selectedDate
+				}
+			} else {
+				this.startDateMax = selectedDate
+			}
+			if (this.startDate) {
+				this.caclulateCost(this.startDate, this.endDate)
+			}
 		}
 	}
 	onBookPlace() {

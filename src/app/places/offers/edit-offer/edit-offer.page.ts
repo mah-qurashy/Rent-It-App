@@ -12,12 +12,12 @@ import { PlacesService } from '../../places.service'
 })
 export class EditOfferPage implements OnInit {
 	public offer: Place
-	public todayDate=new Date(Date.now()).toISOString()
+	public todayDate = new Date(Date.now()).toISOString()
 
 	constructor(
 		private placesService: PlacesService,
 		private activatedRoute: ActivatedRoute,
-		private navController: NavController
+		private navController: NavController,
 	) {}
 
 	ngOnInit() {
@@ -33,16 +33,25 @@ export class EditOfferPage implements OnInit {
 			}
 		})
 	}
-	onSubmit(form:NgForm){
-	  if (!form.valid){
-		return
-	  }
-	  const title=form.value.title
-	  const description=form.value.description
-	  const startDate=form.value.startdate
-	  const endDate=form.value.enddate
-	  const price=form.value.price
+	onSubmit(form: NgForm) {
+		if (!form.valid) {
+			return
+		}
+		const title = form.value.title
+		const description = form.value.description
+		//since dates are optional, if date is not entered set it as undefined
+		let startDate: Date = undefined
+		if (form.value.startdate !== '') {
+			startDate = new Date(form.value.startdate)
+		}
+		let endDate: Date = undefined
+		if (form.value.enddate !== '') {
+			endDate = new Date(form.value.enddate)
+		}
+		const price = parseInt(form.value.price)
+		this.placesService.editPlace(this.offer.id,title, description, price, startDate, endDate)
+		this.navController.navigateBack('/places/tabs/offers')
 	}
-	onEditOffer(){}
-	onDeleteOffer(){}
+	onEditOffer() {}
+	onDeleteOffer() {}
 }

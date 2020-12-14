@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core'
+import { Subscription } from 'rxjs'
+import { AuthService } from '../auth/auth.service'
 import { Place } from './place.model'
 
 @Injectable({
@@ -30,6 +32,8 @@ export class PlacesService {
 			249.99
 		)
 	]
+
+	constructor(private authService: AuthService) {}
 	getPlaces() {
 		return [...this._places]
 	}
@@ -40,5 +44,23 @@ export class PlacesService {
 	}
 		return undefined
 	}
-	constructor() {}
+	editPlace(id:string,title: string, description:string, price: number, startDate: Date, endDate: Date){
+		const place = this._places.find(place =>place.id===id)
+		if(place){
+		place.title=title
+		place.description=description
+		place.price=price
+		place.startDate=startDate
+		place.endDate=endDate
+		this._places=this._places.filter((place)=>{return place.id!==id})
+		this._places.push(place)
+	}
+		return undefined
+	}
+	addPlace(title: string, description:string, price: number, startDate: Date, endDate: Date){
+		const place = new Place(Math.random().toString(),title,description,undefined,price,startDate,endDate,this.authService.userId)
+		this._places.push(place)
+
+	}
+
 }

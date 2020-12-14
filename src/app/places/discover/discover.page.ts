@@ -11,7 +11,7 @@ import { Platform } from '@ionic/angular'
 	styleUrls: ['./discover.page.scss'],
 })
 export class DiscoverPage implements OnInit {
-	_places: Place[] = []
+	places: Place[] = []
 	isAuthenticated: boolean
 	private exitSubcription: Subscription
 
@@ -19,6 +19,9 @@ export class DiscoverPage implements OnInit {
 		private placesService: PlacesService,
 		private platform: Platform
 	) {}
+	ionViewWillEnter(){
+		this.places = this.placesService.getPlaces()
+	}
 	//hardware back button exits app on phones
 	ionViewDidEnter() {
 		this.exitSubcription = this.platform.backButton.subscribe(() => {
@@ -30,7 +33,7 @@ export class DiscoverPage implements OnInit {
 	}
 
 	ngOnInit() {
-		this._places = this.placesService.getPlaces()
+		this.places = this.placesService.getPlaces()
 	}
 	onFilterUpdate(event: CustomEvent<SegmentChangeEventDetail>) {}
 }

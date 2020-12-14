@@ -11,6 +11,9 @@ export class OffersPage implements OnInit {
   public offers: Place[]
 
   constructor(private placesService: PlacesService) { }
+  ionViewWillEnter(){
+		this.offers = this.placesService.getPlaces()
+	}
 
   ngOnInit() {
     this.offers=this.placesService.getPlaces()
