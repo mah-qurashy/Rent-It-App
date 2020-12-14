@@ -15,13 +15,13 @@
           <ion-list>
             <ion-item>
               <ion-label>Start Date</ion-label>
-              <ion-datetime (ionChange)="onStartDateChange($event)" [min]="todayDate"
-                [max]="(endDateCtrl.value)? endDateCtrl.value : '2030-01-01'" placeholder="Select Start Date" ngModel name="startdate"
+              <ion-datetime (ionChange)="onStartDateChange($event)" [min]="startDateMin.toISOString()"
+                [max]="startDateMax.toISOString()" placeholder="Select Start Date" ngModel name="startdate"
                 required #startDateCtrl="ngModel"></ion-datetime>
             </ion-item>
             <ion-item>
               <ion-label>End Date</ion-label>
-              <ion-datetime (ionChange)="onEndDateChange($event)" [min]="(startDateCtrl.value)? startDateCtrl.value : todayDate" max="2030-01-01"
+              <ion-datetime (ionChange)="onEndDateChange($event)" [min]="endDateMin.toISOString()" [max]="endDateMax.toISOString()"
                 placeholder="Select End Date" ngModel name="enddate" required #endDateCtrl></ion-datetime>
             </ion-item>
             <ion-item>
