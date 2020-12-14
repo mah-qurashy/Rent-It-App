@@ -1,8 +1,10 @@
 import { CurrencyPipe } from '@angular/common'
 import { Component, Input, OnInit } from '@angular/core'
 import { NgForm } from '@angular/forms'
-import { ModalController } from '@ionic/angular'
-import { Place } from 'src/app/places/place.model'
+import { ModalController, NavController } from '@ionic/angular'
+import { Booking } from '../booking.model'
+import { Place } from '../../places/place.model'
+import { BookingsService } from '../bookings.service'
 
 @Component({
 	selector: 'app-create-booking',
@@ -18,7 +20,7 @@ export class CreateBookingComponent implements OnInit {
 	endDate: string
 	endDateMin: Date = new Date(Date.now())
 	endDateMax: Date = new Date('2050-01-01')
-	constructor(private modalController: ModalController) {}
+	constructor(private modalController: ModalController,private navController: NavController, private bookingsService: BookingsService ) {}
 
 	ngOnInit() {
 		if (this.place.startDate) {
@@ -67,7 +69,6 @@ export class CreateBookingComponent implements OnInit {
 		}
 	}
 	onBookPlace() {
-		this.modalController.dismiss(null, 'cancel')
 	}
 	onCancel() {
 		this.modalController.dismiss({ message: 'booked' }, 'confirm')
@@ -84,7 +85,21 @@ export class CreateBookingComponent implements OnInit {
 		this.currentCostText = 'Total Cost = ' + diff * this.place.price
 	}
 	onSubmit(form: NgForm) {
-		const startDate = form.value.startdate
-		const endDate = form.value.enddate
+		if (!form.valid) {
+			return
+		}
+		const guestsCount=form.value.numberofguests
+    //since dates are optional, if date is not entered set it as undefined
+		let startDate: Date = undefined
+		if (form.value.startdate !== '') {
+			startDate = new Date(form.value.startdate)
+		}
+		let endDate: Date = undefined
+		if (form.value.enddate !== '') {
+			endDate = new Date(form.value.enddate)
+		}
+    const price = parseInt(form.value.price)
+		this.bookingsService.addBooking(this.place.id, guestsCount, startDate, endDate)
+		this.modalController.dismiss({ message: 'booked' }, 'confirm')
 	}
 }
