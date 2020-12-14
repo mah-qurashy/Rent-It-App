@@ -55,8 +55,14 @@ export class PlacesService {
 		this._places=this._places.filter((place)=>{return place.id!==id})
 		this._places.push(place)
 	}
-		return undefined
+}
+	deletePlace(id:string){
+		const place = this._places.find(place =>place.id===id)
+		if(place){
+
+		this._places=this._places.filter((place)=>{return place.id!==id})
 	}
+}
 	addPlace(title: string, description:string, price: number, startDate: Date, endDate: Date){
 		const place = new Place(Math.random().toString(),title,description,undefined,price,startDate,endDate,this.authService.userId)
 		this._places.push(place)

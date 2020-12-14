@@ -17,7 +17,7 @@ export class EditOfferPage implements OnInit {
 	constructor(
 		private placesService: PlacesService,
 		private activatedRoute: ActivatedRoute,
-		private navController: NavController,
+		private navController: NavController
 	) {}
 
 	ngOnInit() {
@@ -49,9 +49,19 @@ export class EditOfferPage implements OnInit {
 			endDate = new Date(form.value.enddate)
 		}
 		const price = parseInt(form.value.price)
-		this.placesService.editPlace(this.offer.id,title, description, price, startDate, endDate)
+		this.placesService.editPlace(
+			this.offer.id,
+			title,
+			description,
+			price,
+			startDate,
+			endDate
+		)
 		this.navController.navigateBack('/places/tabs/offers')
 	}
 	onEditOffer() {}
-	onDeleteOffer() {}
+	onDeleteOffer() {
+		this.placesService.deletePlace(this.offer.id)
+		this.navController.navigateBack('/places/tabs/offers')
+	}
 }
