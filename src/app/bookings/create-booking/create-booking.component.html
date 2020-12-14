@@ -1,46 +1,75 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>{{place.title}}</ion-title>
-    <ion-buttons slot="primary">
-      <ion-button (click)="onCancel()">Close</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+	<ion-toolbar color="primary">
+		<ion-title>{{ place.title }}</ion-title>
+		<ion-buttons slot="primary">
+			<ion-button (click)="onCancel()">Close</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-grid>
-    <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-      <ion-row class="ion-text-center">
-        <ion-col size-md="8" offset-md="2">
-          <h2>Book this place</h2>
-          <ion-list>
-            <ion-item>
-              <ion-label>Start Date</ion-label>
-              <ion-datetime (ionChange)="onStartDateChange($event)" [min]="startDateMin.toISOString()"
-                [max]="startDateMax.toISOString()" placeholder="Select Start Date" ngModel name="startdate"
-                required #startDateCtrl="ngModel"></ion-datetime>
-            </ion-item>
-            <ion-item>
-              <ion-label>End Date</ion-label>
-              <ion-datetime (ionChange)="onEndDateChange($event)" [min]="endDateMin.toISOString()" [max]="endDateMax.toISOString()"
-                placeholder="Select End Date" ngModel name="enddate" required #endDateCtrl></ion-datetime>
-            </ion-item>
-            <ion-item>
-              <ion-label>Number of guests</ion-label>
-              <ion-select ngModel name="numberofguests" [ngModel]="'2'" required >
-                <ion-select-option value="1">1</ion-select-option>
-                <ion-select-option value="2">2</ion-select-option>
-                <ion-select-option value="3">3</ion-select-option>
-                <ion-select-option value="4">4</ion-select-option>
-              </ion-select>
-            </ion-item>
-            <ion-item class="ion-text-center">
-              <ion-label color="medium">{{currentCostText}}</ion-label>
-            </ion-item>
-          </ion-list>
-          <ion-button type="submit" expand="block" (click)="onBookPlace()">Book</ion-button>
-        </ion-col>
-      </ion-row>
-    </form>
-  </ion-grid>
-
+	<ion-grid>
+		<form #f="ngForm" (ngSubmit)="onSubmit(f)">
+			<ion-row class="ion-text-center">
+				<ion-col size-md="8" offset-md="2">
+					<h2>Book this place</h2>
+					<ion-text color="medium" *ngIf="place.startDate || place.endDate"
+						>This place is available to book
+						<span *ngIf="place.startDate"
+							>from {{ place.startDate.toDateString() }} </span
+						><span *ngIf="place.endDate"
+							>up until {{ place.endDate.toDateString() }}</span
+						></ion-text
+					>
+					<ion-list>
+						<ion-item>
+							<ion-label>Start Date</ion-label>
+							<ion-datetime
+								(ionChange)="onStartDateChange($event)"
+								[min]="startDateMin.toISOString()"
+								[max]="startDateMax.toISOString()"
+								placeholder="Select Start Date"
+								ngModel
+								name="startdate"
+								required
+								#startDateCtrl="ngModel"
+							></ion-datetime>
+						</ion-item>
+						<ion-item>
+							<ion-label>End Date</ion-label>
+							<ion-datetime
+								(ionChange)="onEndDateChange($event)"
+								[min]="endDateMin.toISOString()"
+								[max]="endDateMax.toISOString()"
+								placeholder="Select End Date"
+								ngModel
+								name="enddate"
+								required
+								#endDateCtrl
+							></ion-datetime>
+						</ion-item>
+						<ion-item>
+							<ion-label>Number of guests</ion-label>
+							<ion-select
+								ngModel
+								name="numberofguests"
+								[ngModel]="'2'"
+								required
+							>
+								<ion-select-option value="1">1</ion-select-option>
+								<ion-select-option value="2">2</ion-select-option>
+								<ion-select-option value="3">3</ion-select-option>
+								<ion-select-option value="4">4</ion-select-option>
+							</ion-select>
+						</ion-item>
+						<ion-item class="ion-text-center">
+							<ion-label color="medium">{{ currentCostText }}</ion-label>
+						</ion-item>
+					</ion-list>
+					<ion-button type="submit" expand="block" (click)="onBookPlace()"
+						>Book</ion-button
+					>
+				</ion-col>
+			</ion-row>
+		</form>
+	</ion-grid>
 </ion-content>

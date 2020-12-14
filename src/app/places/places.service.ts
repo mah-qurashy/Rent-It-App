@@ -11,7 +11,9 @@ export class PlacesService {
 			'Tahrir Mansion',
 			'In the heart of the capital.',
 			'https://img.youm7.com/ArticleImgs/2020/5/11/192112-WhatsApp-Image-2020-05-11-at-13.45.15-(1).jpeg',
-			149.99
+			149.99,
+			new Date(Date.now()),
+			new Date('2021-12-30')
     ),
     new Place(
 			'p2',
