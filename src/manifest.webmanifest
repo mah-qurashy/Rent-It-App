@@ -1,7 +1,7 @@
 {
-  "name": "app",
-  "short_name": "app",
-  "theme_color": "#1976d2",
+  "name": "Rent it",
+  "short_name": "Rent it",
+  "theme_color": "#ff5a60",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
