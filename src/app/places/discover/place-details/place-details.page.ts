@@ -11,7 +11,7 @@ import { CreateBookingComponent } from '../../../bookings/create-booking/create-
 	styleUrls: ['./place-details.page.scss'],
 })
 export class PlaceDetailsPage implements OnInit {
-	private place: Place
+	place: Place
 
 	constructor(
 		private navController: NavController,

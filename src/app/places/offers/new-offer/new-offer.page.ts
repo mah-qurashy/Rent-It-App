@@ -7,7 +7,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./new-offer.page.scss'],
 })
 export class NewOfferPage implements OnInit {
-  private todayDate=new Date(Date.now()).toISOString()
+  todayDate=new Date(Date.now()).toISOString()
   constructor() { }
 
   ngOnInit() {

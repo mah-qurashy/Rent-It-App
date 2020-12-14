@@ -11,8 +11,8 @@ import { PlacesService } from '../../places.service'
 	styleUrls: ['./edit-offer.page.scss'],
 })
 export class EditOfferPage implements OnInit {
-	private offer: Place
-	private todayDate=new Date(Date.now()).toISOString()
+	public offer: Place
+	public todayDate=new Date(Date.now()).toISOString()
 
 	constructor(
 		private placesService: PlacesService,

@@ -10,7 +10,7 @@ import { PlacesService } from '../../places.service';
   styleUrls: ['./offer-bookings.page.scss'],
 })
 export class OfferBookingsPage implements OnInit {
-  private place: Place
+  place: Place
 
   constructor(private activatedRoute:ActivatedRoute,private navController:NavController,private placesService: PlacesService) { }
 

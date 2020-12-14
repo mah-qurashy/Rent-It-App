@@ -11,13 +11,13 @@ import { Place } from 'src/app/places/place.model'
 })
 export class CreateBookingComponent implements OnInit {
 	@Input() place: Place
-	private currentCostText = 'Pick date to calculate cost'
-	private startDate: string
-	private startDateMin: Date = new Date(Date.now())
-	private startDateMax: Date = new Date('2050-01-01')
-	private endDate: string
-	private endDateMin: Date = new Date(Date.now())
-	private endDateMax: Date = new Date('2050-01-01')
+	currentCostText = 'Pick date to calculate cost'
+	startDate: string
+	startDateMin: Date = new Date(Date.now())
+	startDateMax: Date = new Date('2050-01-01')
+	endDate: string
+	endDateMin: Date = new Date(Date.now())
+	endDateMax: Date = new Date('2050-01-01')
 	constructor(private modalController: ModalController) {}
 
 	ngOnInit() {

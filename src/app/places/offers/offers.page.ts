@@ -8,7 +8,7 @@ import { PlacesService } from '../places.service';
   styleUrls: ['./offers.page.scss'],
 })
 export class OffersPage implements OnInit {
-  private offers: Place[]
+  public offers: Place[]
 
   constructor(private placesService: PlacesService) { }
 

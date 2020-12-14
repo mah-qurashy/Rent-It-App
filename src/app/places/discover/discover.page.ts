@@ -11,8 +11,8 @@ import { Platform } from '@ionic/angular'
 	styleUrls: ['./discover.page.scss'],
 })
 export class DiscoverPage implements OnInit {
-	private _places: Place[] = []
-	private isAuthenticated: boolean
+	_places: Place[] = []
+	isAuthenticated: boolean
 	private exitSubcription: Subscription
 
 	constructor(
