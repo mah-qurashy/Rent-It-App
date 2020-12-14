@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
-import { NavController } from '@ionic/angular'
+import { AlertController, NavController } from '@ionic/angular'
 import { Place } from '../../place.model'
 import { PlacesService } from '../../places.service'
 
@@ -17,7 +17,8 @@ export class EditOfferPage implements OnInit {
 	constructor(
 		private placesService: PlacesService,
 		private activatedRoute: ActivatedRoute,
-		private navController: NavController
+		private navController: NavController,
+		private alertController: AlertController
 	) {}
 
 	ngOnInit() {
@@ -61,7 +62,24 @@ export class EditOfferPage implements OnInit {
 	}
 	onEditOffer() {}
 	onDeleteOffer() {
-		this.placesService.deletePlace(this.offer.id)
-		this.navController.navigateBack('/places/tabs/offers')
+		this.alertController.create({
+			header: 'Delete offer?',
+			message: 'Do you really want to delete this offer?',
+			buttons: [
+				{
+					text: 'Cancel',
+					role: 'cancel',
+					cssClass: 'medium'
+				},
+				{
+					text: 'Delete',
+					role: 'delete',
+					handler: () => {
+						this.placesService.deletePlace(this.offer.id)
+						this.navController.navigateBack('/places/tabs/offers')
+					},
+				},
+			],
+		}).then((alert)=>{alert.present()})
 	}
 }
