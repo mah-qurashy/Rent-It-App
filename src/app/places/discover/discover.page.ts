@@ -12,6 +12,9 @@ import { Platform } from '@ionic/angular'
 })
 export class DiscoverPage implements OnInit {
 	places: Place[] = []
+	allPlaces: Place[]=[]
+	bookablePlaces: Place[]=[]
+	state: 'all' | 'bookable' = 'all'
 	isAuthenticated: boolean
 	private exitSubcription: Subscription
 
@@ -20,7 +23,14 @@ export class DiscoverPage implements OnInit {
 		private platform: Platform
 	) {}
 	async ionViewWillEnter(){
-		this.places = await this.placesService.getPlaces()
+		this.allPlaces = await this.placesService.getPlaces()
+		this.bookablePlaces = await this.placesService.getBookablePlaces()
+		if(this.state==='all'){
+			this.places=this.allPlaces
+		}
+		if(this.state==='bookable'){
+			this.places=this.bookablePlaces
+		}
 	}
 	//hardware back button exits app on phones
 	ionViewDidEnter() {
@@ -34,6 +44,18 @@ export class DiscoverPage implements OnInit {
 
 	async ngOnInit() {
 		this.places = await this.placesService.getPlaces()
+		this.allPlaces = await this.placesService.getPlaces()
+		this.bookablePlaces = await this.placesService.getBookablePlaces()
 	}
-	onFilterUpdate(event: CustomEvent<SegmentChangeEventDetail>) {}
+	onFilterUpdate(event: CustomEvent<SegmentChangeEventDetail>) {
+		if (event.detail.value==='all'){
+			this.places=this.allPlaces
+			this.state='all'
+		}
+		if (event.detail.value==='bookable'){
+			this.places=this.bookablePlaces
+			this.state='bookable'
+		}
+
+	}
 }

@@ -8,6 +8,7 @@ import { AngularFirestore } from '@angular/fire/firestore'
 	providedIn: 'root',
 })
 export class PlacesService {
+
 	constructor(
 		private authService: AuthService,
 		private firestore: AngularFirestore

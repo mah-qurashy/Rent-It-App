@@ -37,7 +37,6 @@ export class PlaceDetailsPage implements OnInit {
 				return
 			}
 			this.place = await this.placesService.getPlace(paramMap.get('placeId'))
-			console.log(this.place)
 			if (!this.place) {
 				this.navController.navigateBack('/places/tabs/offers')
 				return
