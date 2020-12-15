@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/auth/auth.service'
 })
 export class PlaceDetailsPage implements OnInit {
 	place: Place
+	userId: string
 
 	constructor(
 		private navController: NavController,
@@ -30,7 +31,8 @@ export class PlaceDetailsPage implements OnInit {
 			})
 			.then((modal) => modal.present())
 	}
-	ngOnInit() {
+	async ngOnInit() {
+		this.userId=await this.authService.getUserId()
 		this.activatedRoute.paramMap.subscribe(async (paramMap) => {
 			if (!paramMap.has('placeId')) {
 				this.navController.navigateBack('/places/tabs/offers')
