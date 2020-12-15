@@ -17,7 +17,7 @@ export class BookingsService {
 	async getBookings() {
 		const query = await this.firestore
 			.collection('bookings')
-			.ref.where('owner', '==', this.authService.userId)
+			.ref.where('owner', '==', await this.authService.getUserId(),)
 			.get()
 		let bookings = query.docs.map((doc) => {
 			let booking = { ...(doc.data() as Booking) }
@@ -65,7 +65,7 @@ export class BookingsService {
 			guestsCount,
 			startDate,
 			endDate,
-			owner: this.authService.userId,
+			owner: await this.authService.getUserId(),
 		}
 
 		return await this.firestore.collection('bookings').add(booking)

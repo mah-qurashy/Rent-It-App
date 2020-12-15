@@ -8,7 +8,6 @@ import { AngularFirestore } from '@angular/fire/firestore'
 	providedIn: 'root',
 })
 export class PlacesService {
-
 	constructor(
 		private authService: AuthService,
 		private firestore: AngularFirestore
@@ -25,7 +24,7 @@ export class PlacesService {
 	async getOwnPlaces() {
 		const query = await this.firestore
 			.collection('places')
-			.ref.where('owner', '==', this.authService.userId)
+			.ref.where('owner', '==', await this.authService.getUserId(),)
 			.get()
 		let places = query.docs.map((doc) => {
 			let place = { ...(doc.data() as Place) }
@@ -37,14 +36,14 @@ export class PlacesService {
 	async getBookablePlaces() {
 		const query = await this.firestore
 			.collection('places')
-			.ref.where('owner', '!=', this.authService.userId)
+			.ref.where('owner', '!=', await this.authService.getUserId(),)
 			.get()
-			let places = query.docs.map((doc) => {
-				let place = { ...(doc.data() as Place) }
-				place.id = doc.id
-				return place
-			})
-			return [...places]
+		let places = query.docs.map((doc) => {
+			let place = { ...(doc.data() as Place) }
+			place.id = doc.id
+			return place
+		})
+		return [...places]
 	}
 	async getPlace(id) {
 		const doc = await this.firestore
@@ -85,7 +84,7 @@ export class PlacesService {
 			price,
 			imageUrl:
 				'https://platinumplusrealtyky.com/wp-content/uploads/2019/06/HousePlaceholder-5.png',
-			owner: this.authService.userId,
+			owner: await this.authService.getUserId(),
 		}
 		if (startDate) {
 			place.startDate = startDate
