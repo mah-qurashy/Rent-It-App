@@ -11,6 +11,7 @@
 	<ion-grid *ngIf="bookings">
 		<ion-row>
 			<ion-col size="12" size-sm="8" offset-sm="2">
+				<ion-text color="medium" >Click on a booking to cancel it</ion-text>
 				<ion-list>
 					<ion-item *ngIf="bookings.length === 0">
 						<ion-label color="primary" class="ion-text-center">You have no bookings yet.</ion-label>
