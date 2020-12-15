@@ -11,7 +11,7 @@ An app for place rentals, made with Ionic + Angular
 * Rxjs
 * Firebase deployment
 * Firebase Authentication (WIP)
-* Firestore for database (WIP)
+* Firestore for database
 
 Link to website:
 https://rent-it-35be1.firebaseapp.com/
