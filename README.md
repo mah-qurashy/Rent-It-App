@@ -10,7 +10,7 @@ An app for place rentals, made with Ionic + Angular
 * Angular PWA
 * Rxjs
 * Firebase deployment
-* Firebase Authentication (WIP)
+* Firebase Authentication
 * Firestore for database
 
 Link to website:
