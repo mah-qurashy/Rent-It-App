@@ -23,7 +23,12 @@ const routes: Routes = [
     path: 'bookings',
     loadChildren: () => import('./bookings/bookings.module').then( m => m.BookingsPageModule),
     ...canActivate(redirectUnauthorizedToAuth)
-  }
+  },
+  {
+    path: '**',
+    redirectTo: 'places',
+    pathMatch: 'full'
+  },
 ];
 
 @NgModule({
