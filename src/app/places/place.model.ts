@@ -1,14 +1,11 @@
-export class Place {
+export interface Place {
 
-	constructor(
-		public id: string,
-		public title: string,
-		public description: string,
-		public imageUrl: string ="https://platinumplusrealtyky.com/wp-content/uploads/2019/06/HousePlaceholder-5.png",
-		public price: number,
-		public startDate: Date = undefined,
-		public endDate: Date = undefined,
-		public owner: string = undefined,
-
-	) {}
+		id?: string,
+		title: string,
+		description: string,
+		imageUrl: string ,
+		price: number,
+		startDate?: string ,
+		endDate?: string ,
+		owner: string ,
 }

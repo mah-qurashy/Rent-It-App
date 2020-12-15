@@ -1,6 +1,6 @@
 <ion-header>
 	<ion-toolbar color="primary">
-		<ion-title>{{ place.title }}</ion-title>
+		<ion-title *ngIf="place">{{ place.title }}</ion-title>
 		<ion-buttons slot="primary">
 			<ion-button (click)="onCancel()">Close</ion-button>
 		</ion-buttons>
@@ -8,16 +8,16 @@
 </ion-header>
 <ion-content>
 	<ion-grid>
-		<form #f="ngForm" (ngSubmit)="onSubmit(f)">
+		<form *ngIf="place" #f="ngForm" (ngSubmit)="onSubmit(f)">
 			<ion-row class="ion-text-center">
 				<ion-col size-md="8" offset-md="2">
 					<h2>Book this place</h2>
 					<ion-text color="medium" *ngIf="place.startDate || place.endDate"
 						>This place is available to book
 						<span *ngIf="place.startDate"
-							>from {{ place.startDate.toDateString() }} </span
+							>from {{ formatDate(place.startDate) }} </span
 						><span *ngIf="place.endDate"
-							>up until {{ place.endDate.toDateString() }}</span
+							>up until {{ formatDate(place.endDate) }}</span
 						></ion-text
 					>
 					<ion-list>
@@ -25,8 +25,8 @@
 							<ion-label>Start Date</ion-label>
 							<ion-datetime
 								(ionChange)="onStartDateChange($event)"
-								[min]="startDateMin.toISOString()"
-								[max]="startDateMax.toISOString()"
+								[min]="startDateMin"
+								[max]="startDateMax"
 								placeholder="Select Start Date"
 								ngModel
 								name="startdate"
@@ -38,8 +38,8 @@
 							<ion-label>End Date</ion-label>
 							<ion-datetime
 								(ionChange)="onEndDateChange($event)"
-								[min]="endDateMin.toISOString()"
-								[max]="endDateMax.toISOString()"
+								[min]="endDateMin"
+								[max]="endDateMax"
 								placeholder="Select End Date"
 								ngModel
 								name="enddate"

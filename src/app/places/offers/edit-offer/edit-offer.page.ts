@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
-import { AlertController, NavController } from '@ionic/angular'
+import { AlertController, LoadingController, NavController } from '@ionic/angular'
 import { Place } from '../../place.model'
 import { PlacesService } from '../../places.service'
 
@@ -18,39 +18,35 @@ export class EditOfferPage implements OnInit {
 		private placesService: PlacesService,
 		private activatedRoute: ActivatedRoute,
 		private navController: NavController,
-		private alertController: AlertController
+		private alertController: AlertController,
+		private loadingController: LoadingController
 	) {}
 
 	ngOnInit() {
-		this.activatedRoute.paramMap.subscribe((paramMap) => {
+		this.activatedRoute.paramMap.subscribe(async (paramMap) => {
 			if (!paramMap.has('placeId')) {
 				this.navController.navigateBack('/places/tabs/offers')
 				return
 			}
-			this.offer = this.placesService.getPlace(paramMap.get('placeId'))
+			 this.offer = await this.placesService.getPlace(paramMap.get('placeId'))
 			if (!this.offer) {
 				this.navController.navigateBack('/places/tabs/offers')
 				return
 			}
 		})
 	}
-	onSubmit(form: NgForm) {
+	async onSubmit(form: NgForm) {
 		if (!form.valid) {
 			return
 		}
 		const title = form.value.title
 		const description = form.value.description
-		//since dates are optional, if date is not entered set it as undefined
-		let startDate: Date = undefined
-		if (form.value.startdate !== '') {
-			startDate = new Date(form.value.startdate)
-		}
-		let endDate: Date = undefined
-		if (form.value.enddate !== '') {
-			endDate = new Date(form.value.enddate)
-		}
+
+		let	startDate = form.value.startdate
+		let endDate =  form.value.enddate
 		const price = parseInt(form.value.price)
-		this.placesService.editPlace(
+		this.loadingController.create({message: "Editing.."}).then(element=>element.present())
+		await this.placesService.editPlace(
 			this.offer.id,
 			title,
 			description,
@@ -58,6 +54,7 @@ export class EditOfferPage implements OnInit {
 			startDate,
 			endDate
 		)
+		this.loadingController.dismiss()
 		this.navController.navigateBack('/places/tabs/offers')
 	}
 	onEditOffer() {}
@@ -75,11 +72,18 @@ export class EditOfferPage implements OnInit {
 					text: 'Delete',
 					role: 'delete',
 					handler: () => {
-						this.placesService.deletePlace(this.offer.id)
-						this.navController.navigateBack('/places/tabs/offers')
+						this.deletePlace(this.offer.id)
 					},
 				},
 			],
 		}).then((alert)=>{alert.present()})
 	}
+	async deletePlace(id:  string){
+		this.loadingController.create({message: "Deleting.."}).then(element=>element.present())
+		await this.placesService.deletePlace(id)
+		this.loadingController.dismiss()
+		this.navController.navigateBack('/places/tabs/offers')
+
+	}
+	
 }

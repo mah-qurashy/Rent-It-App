@@ -1,23 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { Place } from '../place.model';
-import { PlacesService } from '../places.service';
+import { Component, OnInit } from '@angular/core'
+import { LoadingController } from '@ionic/angular'
+import { Place } from '../place.model'
+import { PlacesService } from '../places.service'
 
 @Component({
-  selector: 'app-offers',
-  templateUrl: './offers.page.html',
-  styleUrls: ['./offers.page.scss'],
+	selector: 'app-offers',
+	templateUrl: './offers.page.html',
+	styleUrls: ['./offers.page.scss'],
 })
 export class OffersPage implements OnInit {
-  public offers: Place[]
+	public offers: Place[]
 
-  constructor(private placesService: PlacesService) { }
-  ionViewWillEnter(){
-		this.offers = this.placesService.getPlaces()
+	constructor(
+		private placesService: PlacesService,
+	) {}
+	async ionViewWillEnter() {
+		this.offers = await this.placesService.getOwnPlaces()
 	}
 
-  ngOnInit() {
-    this.offers=this.placesService.getPlaces()
-
-  }
-
+	async ngOnInit() {
+		this.offers = await this.placesService.getOwnPlaces()
+	}
+	formatDate(string) {
+		return new Date(string).toLocaleDateString()
+	}
 }

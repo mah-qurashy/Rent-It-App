@@ -2,71 +2,99 @@ import { Injectable } from '@angular/core'
 import { Subscription } from 'rxjs'
 import { AuthService } from '../auth/auth.service'
 import { Place } from './place.model'
+import { AngularFirestore } from '@angular/fire/firestore'
 
 @Injectable({
 	providedIn: 'root',
 })
 export class PlacesService {
-	private _places: Place[] = [
-		new Place(
-			'p1',
-			'Tahrir Mansion',
-			'In the heart of the capital.',
-			'https://img.youm7.com/ArticleImgs/2020/5/11/192112-WhatsApp-Image-2020-05-11-at-13.45.15-(1).jpeg',
-			149.99,
-			new Date(Date.now()),
-			new Date('2021-12-30')
-    ),
-    new Place(
-			'p2',
-      'Alexandria room, on sea',
-			'A romantic place in Alexandria.',
-			'https://www.shorouknews.com/uploadedimages/Other/original/12249102.jpg',
-			189.99
-    ),
-    new Place(
-			'p3',
-      'Chalet on Hurgada',
-			'Has its own private pool.',
-			'https://yallabook.com/guide/uploade/files/180124_c42644c4f4.jpg',
-			249.99
-		)
-	]
+	private _places
 
-	constructor(private authService: AuthService) {}
-	getPlaces() {
-		return [...this._places]
+	constructor(
+		private authService: AuthService,
+		private firestore: AngularFirestore
+	) {}
+	async getPlaces() {
+		const query = await this.firestore.collection('places').get().toPromise()
+		return [
+			...(this._places = query.docs.map((doc) => {
+				let place = { ...(doc.data() as Place) }
+				place.id = doc.id
+				return place
+			})),
+		]
 	}
-	getPlace(id){
-		const place = this._places.find(place =>place.id===id)
-		if(place){
-		return {...place}
+	async getOwnPlaces() {
+		const query = await this.firestore
+			.collection('places')
+			.ref.where('owner', '==', this.authService.userId)
+			.get()
+		return [
+			...(this._places = query.docs.map((doc) => {
+				let place = { ...(doc.data() as Place) }
+				place.id = doc.id
+				return place
+			})),
+		]
 	}
-		return undefined
+	async getBookablePlaces() {
+		const query = await this.firestore
+			.collection('places')
+			.ref.where('owner', '!=', this.authService.userId)
+			.get()
+		return [
+			...(this._places = query.docs.map((doc) => {
+				let place = { ...(doc.data() as Place) }
+				place.id = doc.id
+				return place
+			})),
+		]
 	}
-	editPlace(id:string,title: string, description:string, price: number, startDate: Date, endDate: Date){
-		const place = this._places.find(place =>place.id===id)
-		if(place){
-		place.title=title
-		place.description=description
-		place.price=price
-		place.startDate=startDate
-		place.endDate=endDate
-		this._places=this._places.filter((place)=>{return place.id!==id})
-		this._places.push(place)
+	async getPlace(id) {
+		const doc = await this.firestore
+			.collection('places')
+			.doc(id)
+			.get()
+			.toPromise()
+		let place = { ...(doc.data() as Place) }
+		place.id = doc.id
+		return place
 	}
-}
-	deletePlace(id:string){
-		const place = this._places.find(place =>place.id===id)
-		if(place){
+	async editPlace(
+		id: string,
+		title: string,
+		description: string,
+		price: number,
+		startDate: string,
+		endDate: string
+	) {
+		await this.firestore.collection('places').doc(id).update({title,description,price,startDate,endDate})
+	}
+	async deletePlace(id: string) {
+		return await this.firestore.collection('places').doc(id).delete()
+	}
+	async addPlace(
+		title: string,
+		description: string,
+		price: number,
+		startDate: string,
+		endDate: string
+	) {
+		let place: Place = {
+			title,
+			description,
+			price,
+			imageUrl:
+				'https://platinumplusrealtyky.com/wp-content/uploads/2019/06/HousePlaceholder-5.png',
+			owner: this.authService.userId,
+		}
+		if (startDate) {
+			place.startDate = startDate
+		}
+		if (endDate) {
+			place.endDate = startDate
+		}
 
-		this._places=this._places.filter((place)=>{return place.id!==id})
+		return await this.firestore.collection('places').add(place)
 	}
-}
-	addPlace(title: string, description:string, price: number, startDate: Date, endDate: Date){
-		const place = new Place(Math.random().toString(),title,description,undefined,price,startDate,endDate,this.authService.userId)
-		this._places.push(place)
-
-	}
-
 }

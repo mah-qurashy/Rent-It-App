@@ -15,16 +15,20 @@ export class CreateBookingComponent implements OnInit {
 	@Input() place: Place
 	currentCostText = 'Pick date to calculate cost'
 	startDate: string
-	startDateMin: Date = new Date(Date.now())
-	startDateMax: Date = new Date('2050-01-01')
+	startDateMin: string = new Date(Date.now()).toISOString()
+	startDateMax: string = new Date('2050-01-01').toISOString()
 	endDate: string
-	endDateMin: Date = new Date(Date.now())
-	endDateMax: Date = new Date('2050-01-01')
-	constructor(private modalController: ModalController,private navController: NavController, private bookingsService: BookingsService ) {}
+	endDateMin: string = new Date(Date.now()).toISOString()
+	endDateMax: string = new Date('2050-01-01').toISOString()
+	constructor(
+		private modalController: ModalController,
+		private navController: NavController,
+		private bookingsService: BookingsService
+	) {}
 
 	ngOnInit() {
 		if (this.place.startDate) {
-			if (this.place.startDate < this.startDateMin) {
+			if (new Date(this.place.startDate) > new Date(this.startDateMin)) {
 				this.startDateMin = this.place.startDate
 				this.endDateMin = this.place.startDate
 			}
@@ -33,14 +37,15 @@ export class CreateBookingComponent implements OnInit {
 			this.startDateMax = this.place.endDate
 			this.endDateMax = this.place.endDate
 		}
+		console.log(this.startDateMin, this.startDateMax)
 	}
 
 	onStartDateChange(event: CustomEvent) {
 		if (event.detail.value) {
 			this.startDate = event.detail.value
-			const selectedDate = new Date(this.startDate)
+			const selectedDate = this.startDate
 			if (this.place.startDate) {
-				if (selectedDate > this.place.startDate) {
+				if (new Date(selectedDate) > new Date(this.place.startDate)) {
 					this.endDateMin = selectedDate
 				}
 			} else {
@@ -55,9 +60,9 @@ export class CreateBookingComponent implements OnInit {
 	onEndDateChange(event: CustomEvent) {
 		if (event.detail.value) {
 			this.endDate = event.detail.value
-			const selectedDate = new Date(this.endDate)
+			const selectedDate = this.endDate
 			if (this.place.endDate) {
-				if (selectedDate < this.place.endDate) {
+				if (new Date(selectedDate) < new Date(this.place.endDate)) {
 					this.startDateMax = selectedDate
 				}
 			} else {
@@ -68,8 +73,7 @@ export class CreateBookingComponent implements OnInit {
 			}
 		}
 	}
-	onBookPlace() {
-	}
+	onBookPlace() {}
 	onCancel() {
 		this.modalController.dismiss({ message: 'booked' }, 'confirm')
 	}
@@ -88,18 +92,20 @@ export class CreateBookingComponent implements OnInit {
 		if (!form.valid) {
 			return
 		}
-		const guestsCount=form.value.numberofguests
-    //since dates are optional, if date is not entered set it as undefined
-		let startDate: Date = undefined
-		if (form.value.startdate !== '') {
-			startDate = new Date(form.value.startdate)
-		}
-		let endDate: Date = undefined
-		if (form.value.enddate !== '') {
-			endDate = new Date(form.value.enddate)
-		}
-    const price = parseInt(form.value.price)
-		this.bookingsService.addBooking(this.place.id, guestsCount, startDate, endDate)
+		const guestsCount = form.value.numberofguests
+		let startDate = form.value.startdate
+
+		let endDate = form.value.enddate
+		const price = parseInt(form.value.price)
+		this.bookingsService.addBooking(
+			this.place.id,
+			guestsCount,
+			startDate,
+			endDate
+		)
 		this.modalController.dismiss({ message: 'booked' }, 'confirm')
+	}
+	formatDate(string) {
+		return new Date(string).toLocaleDateString()
 	}
 }

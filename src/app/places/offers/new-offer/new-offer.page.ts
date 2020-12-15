@@ -11,26 +11,27 @@ import { PlacesService } from '../../places.service'
 })
 export class NewOfferPage implements OnInit {
 	todayDate = new Date(Date.now()).toISOString()
-	constructor(private placesService: PlacesService, private navController: NavController) {}
+	constructor(
+		private placesService: PlacesService,
+		private navController: NavController,
+		private  loadingController: LoadingController
+	) {}
 
 	ngOnInit() {}
-	onSubmit(form: NgForm) {
+	async onSubmit(form: NgForm) {
 		if (!form.valid) {
 			return
 		}
 		const title = form.value.title
-    const description = form.value.description
-    //since dates are optional, if date is not entered set it as undefined
-		let startDate: Date = undefined
-		if (form.value.startdate !== '') {
-			startDate = new Date(form.value.startdate)
-		}
-		let endDate: Date = undefined
-		if (form.value.enddate !== '') {
-			endDate = new Date(form.value.enddate)
-		}
-    const price = parseInt(form.value.price)
-		this.placesService.addPlace(title, description, price, startDate, endDate)
+		const description = form.value.description
+		let startDate = form.value.startdate
+
+		let endDate = form.value.enddate
+
+		const price = parseInt(form.value.price)
+		this.loadingController.create({message: "Adding.."}).then(element=>element.present())
+		await this.placesService.addPlace(title, description, price, startDate, endDate)
+		this.loadingController.dismiss()
 		this.navController.navigateBack('/places/tabs/offers')
 	}
 }

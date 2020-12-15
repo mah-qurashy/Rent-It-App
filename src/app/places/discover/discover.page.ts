@@ -19,8 +19,8 @@ export class DiscoverPage implements OnInit {
 		private placesService: PlacesService,
 		private platform: Platform
 	) {}
-	ionViewWillEnter(){
-		this.places = this.placesService.getPlaces()
+	async ionViewWillEnter(){
+		this.places = await this.placesService.getPlaces()
 	}
 	//hardware back button exits app on phones
 	ionViewDidEnter() {
@@ -32,8 +32,8 @@ export class DiscoverPage implements OnInit {
 		this.exitSubcription.unsubscribe()
 	}
 
-	ngOnInit() {
-		this.places = this.placesService.getPlaces()
+	async ngOnInit() {
+		this.places = await this.placesService.getPlaces()
 	}
 	onFilterUpdate(event: CustomEvent<SegmentChangeEventDetail>) {}
 }
