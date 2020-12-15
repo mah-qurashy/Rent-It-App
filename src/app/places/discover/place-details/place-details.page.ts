@@ -4,6 +4,7 @@ import { PlacesService } from '../../places.service'
 import { Place } from '../../place.model'
 import { ActivatedRoute } from '@angular/router'
 import { CreateBookingComponent } from '../../../bookings/create-booking/create-booking.component'
+import { AuthService } from 'src/app/auth/auth.service'
 
 @Component({
 	selector: 'app-place-details',
@@ -18,6 +19,7 @@ export class PlaceDetailsPage implements OnInit {
 		private placesService: PlacesService,
 		private activatedRoute: ActivatedRoute,
 		private modalController: ModalController,
+		authService: AuthService
 	) {}
 
 	onBookPlace() {

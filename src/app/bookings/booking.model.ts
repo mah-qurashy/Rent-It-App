@@ -1,12 +1,13 @@
-export class Booking {
+import { Place } from "../places/place.model";
 
-	constructor(
-		public id: string,
-        public placeId: string,
-        public guestsCount: number,
-		public startDate: Date = undefined,
-		public endDate: Date = undefined,
-		public owner: string = undefined,
+export interface Booking {
 
-	) {}
+		 id?: string,
+         placeId: string,
+         guestsCount: number,
+		 startDate: string,
+		 endDate: string,
+		 owner: string,
+		 place?: Place
+
 }

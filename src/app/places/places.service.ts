@@ -8,47 +8,42 @@ import { AngularFirestore } from '@angular/fire/firestore'
 	providedIn: 'root',
 })
 export class PlacesService {
-	private _places
-
 	constructor(
 		private authService: AuthService,
 		private firestore: AngularFirestore
 	) {}
 	async getPlaces() {
 		const query = await this.firestore.collection('places').get().toPromise()
-		return [
-			...(this._places = query.docs.map((doc) => {
-				let place = { ...(doc.data() as Place) }
-				place.id = doc.id
-				return place
-			})),
-		]
+		let places = query.docs.map((doc) => {
+			let place = { ...(doc.data() as Place) }
+			place.id = doc.id
+			return place
+		})
+		return [...places]
 	}
 	async getOwnPlaces() {
 		const query = await this.firestore
 			.collection('places')
 			.ref.where('owner', '==', this.authService.userId)
 			.get()
-		return [
-			...(this._places = query.docs.map((doc) => {
-				let place = { ...(doc.data() as Place) }
-				place.id = doc.id
-				return place
-			})),
-		]
+		let places = query.docs.map((doc) => {
+			let place = { ...(doc.data() as Place) }
+			place.id = doc.id
+			return place
+		})
+		return [...places]
 	}
 	async getBookablePlaces() {
 		const query = await this.firestore
 			.collection('places')
 			.ref.where('owner', '!=', this.authService.userId)
 			.get()
-		return [
-			...(this._places = query.docs.map((doc) => {
+			let places = query.docs.map((doc) => {
 				let place = { ...(doc.data() as Place) }
 				place.id = doc.id
 				return place
-			})),
-		]
+			})
+			return [...places]
 	}
 	async getPlace(id) {
 		const doc = await this.firestore
@@ -68,7 +63,10 @@ export class PlacesService {
 		startDate: string,
 		endDate: string
 	) {
-		await this.firestore.collection('places').doc(id).update({title,description,price,startDate,endDate})
+		await this.firestore
+			.collection('places')
+			.doc(id)
+			.update({ title, description, price, startDate, endDate })
 	}
 	async deletePlace(id: string) {
 		return await this.firestore.collection('places').doc(id).delete()

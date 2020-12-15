@@ -1,50 +1,73 @@
 import { Injectable } from '@angular/core'
+import { AngularFirestore } from '@angular/fire/firestore'
 import { Subscription } from 'rxjs'
 import { AuthService } from '../auth/auth.service'
+import { PlacesService } from '../places/places.service'
 import { Booking } from './booking.model'
 
 @Injectable({
 	providedIn: 'root',
 })
 export class BookingsService {
-	private _bookings: Booking[] = []
-
-	constructor(private authService: AuthService) {}
-	getBookings() {
-		return [...this._bookings]
+	constructor(
+		private authService: AuthService,
+		private firestore: AngularFirestore,
+		private placesService: PlacesService
+	) {}
+	async getBookings() {
+		const query = await this.firestore
+			.collection('bookings')
+			.ref.where('owner', '==', this.authService.userId)
+			.get()
+		let bookings = query.docs.map((doc) => {
+			let booking = { ...(doc.data() as Booking) }
+			booking.id = doc.id
+			return booking
+		})
+		bookings.forEach(async (booking) => {
+			booking.place = await this.placesService.getPlace(booking.placeId)
+		})
+		return [...bookings]
 	}
-	getBooking(id) {
-		const booking = this._bookings.find((booking) => booking.id === id)
-		if (booking) {
-			return { ...booking }
-		}
-		return undefined
+	async getBooking(id) {
+		const doc = await this.firestore
+			.collection('bookings')
+			.doc(id)
+			.get()
+			.toPromise()
+		let booking = { ...(doc.data() as Booking) }
+		booking.id = doc.id
+		booking.place = await this.placesService.getPlace(booking.placeId)
+		return booking
 	}
-	editBooking() {
-    //TODO:
-  }
-	deletePlace(id: string) {
-		const booking = this._bookings.find((booking) => booking.id === id)
-		if (booking) {
-			this._bookings = this._bookings.filter((booking) => {
-				return booking.id !== id
-			})
-		}
+	async editBooking(
+		id: string,
+		guestsCount: number,
+		startDate: string,
+		endDate: string
+	) {
+		await this.firestore
+			.collection('bookings')
+			.doc(id)
+			.update({ guestsCount, startDate, endDate })
 	}
-	addBooking(
+	async deleteBooking(id: string) {
+		return await this.firestore.collection('bookings').doc(id).delete()
+	}
+	async addBooking(
 		placeId: string,
 		guestsCount: number,
-		startDate: Date,
-		endDate: Date
+		startDate: string,
+		endDate: string
 	) {
-		const booking = new Booking(
-			Math.random().toString(),
+		let booking: Booking = {
 			placeId,
 			guestsCount,
 			startDate,
 			endDate,
-			this.authService.userId
-		)
-		this._bookings.push(booking)
+			owner: this.authService.userId,
+		}
+
+		return await this.firestore.collection('bookings').add(booking)
 	}
 }
