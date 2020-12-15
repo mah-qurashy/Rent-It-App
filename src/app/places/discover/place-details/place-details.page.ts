@@ -19,7 +19,7 @@ export class PlaceDetailsPage implements OnInit {
 		private placesService: PlacesService,
 		private activatedRoute: ActivatedRoute,
 		private modalController: ModalController,
-		authService: AuthService
+		public authService: AuthService
 	) {}
 
 	onBookPlace() {
