@@ -32,6 +32,7 @@ export class AppComponent implements OnInit{
   }
   onLogout(){
     this.authService.logout()
+    this.menuController.enable(false)
     this.router.navigateByUrl('/auth')
   }
 }

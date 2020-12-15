@@ -34,6 +34,7 @@
 			</ion-row>
 			<ion-row>
 				<ion-col size-lg="4" offset-lg="4" class="ion-text-center">
+					<ion-text color="medium" >{{errorMsg}}</ion-text>
 					<ion-spinner *ngIf="isLoading"></ion-spinner>
 					<ion-button type="submit" *ngIf="!isLoading" color="primary" expand="block" (click)="onSignup()">
 						Signup</ion-button>

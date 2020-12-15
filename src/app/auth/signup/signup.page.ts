@@ -12,6 +12,7 @@ import { AuthService } from '../auth.service'
 })
 export class SignupPage implements OnInit {
 	isLoading = false
+	errorMsg= ""
 	private exitSubcription: Subscription
 
 	constructor(
@@ -35,8 +36,9 @@ export class SignupPage implements OnInit {
 	}
 	onSubmit(form: NgForm) {
 			if (!form.valid) {
-				return
+				return this.errorMsg= "Password must be at least 8 characters long."
 			}
+			this.errorMsg= ""
 			const email = form.value.email
 			const password = form.value.password
 			this.isLoading = true
