@@ -23,8 +23,6 @@ export class AppComponent implements OnInit{
     this.initializeApp();
   }
   ngOnInit(){
-    if(!this.authService.userIsAuthenticated)
-    this.menuController.enable(false)
   }
   initializeApp() {
     this.platform.ready().then(() => {
@@ -35,6 +33,5 @@ export class AppComponent implements OnInit{
   onLogout(){
     this.authService.logout()
     this.router.navigateByUrl('/auth')
-    this.menuController.enable(false)
   }
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { Router } from '@angular/router'
-import { MenuController, Platform } from '@ionic/angular'
+import { AlertController, MenuController, Platform } from '@ionic/angular'
+import { ok } from 'assert'
 import { Subscription } from 'rxjs'
 import { AuthService } from './auth.service'
 
@@ -18,7 +19,8 @@ export class AuthPage implements OnInit {
 		private authService: AuthService,
 		private router: Router,
 		private menuController: MenuController,
-		private platform: Platform
+		private platform: Platform,
+		private alertController: AlertController
 	) {}
 
 	ngOnInit() {
@@ -34,22 +36,23 @@ export class AuthPage implements OnInit {
 		this.exitSubcription.unsubscribe()
 	}
 
-	onLogin() {
-		this.authService.login()
+	onLogin() {}
+	onSubmit(form: NgForm) {
+		if (!form.valid) {
+			return
+		}
+		const email = form.value.email
+		const password = form.value.password
 		this.isLoading = true
-		setTimeout(() => {
-			//simulate login
+		this.authService.login(email, password).then(() => {
 			this.isLoading = false
 			this.router.navigateByUrl('/places/tabs/discover')
 			this.menuController.enable(true)
-		}, 2000)
-	}
-	onSubmit(form: NgForm) {
-		if(!form.valid){
-			return
-		}
-		const email =form.value.email;
-		const password = form.value.password;
-		//send login request
+		}).catch(()=>{
+			this.alertController.create({message:"Invalid E-mail or password",buttons:[{text:'Ok', role: 'ok'}]}).then(alert=>alert.present())
+			this.isLoading = false
+
+		})
+
 	}
 }
